@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="appRoot" prefHeight="800.0" prefWidth="1520.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.jgears.gui.UiMainController">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <Menu mnemonicParsing="false" text="Export">
+                     <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleExportObj" text="OBJ" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleExportStl" text="STL" />
+                     </items></Menu>
+	    <Menu mnemonicParsing="false" text="Import">
+                     <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleImportObj" text="OBJ" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleImportStl" text="STL" />
+                     </items></Menu>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#handleClose" text="Quit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="View">
+               <items>
+                  <CheckMenuItem fx:id="menuAxes" mnemonicParsing="false" onAction="#handleCheckAxes" text="Center Axes" />
+                  <CheckMenuItem fx:id="menuGizmo" mnemonicParsing="false" onAction="#handleCheckGizmo" text="Corner Axes" />
+               </items>
+        </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Documentation" />
+               </items>
+            </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <BorderPane layoutX="220.0" layoutY="140.0" prefHeight="375.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <top>
+                  <HBox prefHeight="40.0" prefWidth="868.0" BorderPane.alignment="CENTER">
+                     <children>
+			 <Button fx:id="scriptBtn" layoutX="1265.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadScriptWindow" prefHeight="40.0" prefWidth="60.0" stylesheets="@button.css" text="Script">
+                           <font>
+                              <Font name="Noto Sans Regular" size="12.0" />
+                           </font>
+                           <tooltip>
+                              <Tooltip text="Scripting Editor" />
+                           </tooltip>
+                        </Button>
+			
+			<Button fx:id="spurBtn" mnemonicParsing="false" onAction="#loadSpurWindow" prefHeight="40.0" prefWidth="100.0" stylesheets="@button.css" text="Parallel Gears">
+                           <font>
+                              <Font name="Noto Sans Regular" size="12.0" />
+                           </font>
+			   <tooltip>
+                              <Tooltip text="Parallel Gears Drive Generator" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="bevelBtn" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadBevelWindow" prefHeight="40.0" prefWidth="100.0" stylesheets="@button.css" text="Bevel Gears">
+                           <font>
+                              <Font name="Noto Sans Regular" size="12.0" />
+                           </font>
+			   <tooltip>
+                              <Tooltip text="Bevel Gears Drive Generator" />
+                           </tooltip>
+                        </Button>
+			<Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Button fx:id="frontBtn" layoutX="316.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleFrontView" prefHeight="40.0" prefWidth="45.0" stylesheets="@button.css">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/front.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Front View" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="backBtn" layoutX="1148.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackView" prefHeight="40.0" prefWidth="45.0" stylesheets="@button.css">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/back.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Back View" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="leftBtn" layoutX="1197.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleLeftView" prefHeight="40.0" prefWidth="45.0" stylesheets="@button.css">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/left.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Left View" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="rightBtn" layoutX="1148.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleRightView" prefHeight="40.0" prefWidth="45.0" stylesheets="@button.css">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/right.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Right View" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="topBtn" layoutX="1197.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleTopView" prefHeight="40.0" prefWidth="45.0" stylesheets="@button.css">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/top.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Top View" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="bottomBtn" layoutX="1246.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBottomView" prefHeight="40.0" prefWidth="45.0" stylesheets="@button.css">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/bottom.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Bottom View" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="isometricBtn" layoutX="210.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleIsometricView" prefHeight="40.0" prefWidth="45.0" stylesheets="@button.css">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/isometric.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Isometric View" />
+                           </tooltip>
+                        </Button>
+			<Separator orientation="VERTICAL" prefHeight="200.0" />
+			<Button fx:id="zoomInBtn" layoutX="210.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleZoomIn" prefHeight="40.0" prefWidth="45.0" stylesheets="@button.css">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/add.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Zoom In" />
+                           </tooltip>
+                        </Button>
+			<Button fx:id="zoomOutBtn" layoutX="210.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleZoomOut" prefHeight="40.0" prefWidth="45.0" stylesheets="@button.css">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/remove.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Zoom Out" />
+                           </tooltip>
+                        </Button>
+                        
+                     </children>
+                  </HBox>
+               </top>
+               <center>
+                  <AnchorPane fx:id="viewContainer" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(center 50% 50%,radius 75%,rgba(220,220,220,0.9) 0%,rgba(120,120,120,0.9) 100%);" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>

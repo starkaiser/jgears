@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="890.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.jgears.gui.ReportController">
+   <children>
+      <BorderPane prefHeight="650.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+            <AnchorPane prefHeight="37.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#handleClose" prefHeight="37.0" prefWidth="80.0" stylesheets="@button.css" text="Close" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <font>
+                        <Font name="Noto Sans Regular" size="14.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Close Window" />
+                     </tooltip>
+                  </Button>
+                  <Button fx:id="saveBtn" layoutX="570.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="37.0" prefWidth="80.0" stylesheets="@button.css" text="Save" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="80.0">
+                     <font>
+                        <Font name="Noto Sans Regular" size="14.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Save Technical Report" />
+                     </tooltip>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </bottom>
+         <center>
+            <WebView fx:id="reportView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

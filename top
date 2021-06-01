@@ -1,0 +1,19 @@
+// code for the top case of the gripper
+CSG top = new Cube(57.4, 64, 4).toCSG();
+CSG slide = new Cube(6,19,4).toCSG();
+
+top = top.difference(slide.transformed(Transform.unity().translateY(-22.5)));
+top = top.difference(slide.transformed(Transform.unity().translateY(22.5)));
+
+top = top.transformed(Transform.unity().translateZ(2))
+
+CSG hole1 = new Cylinder(1.35,2,20).toCSG();
+CSG hole2 = new Cylinder(2.45,2,20).toCSG();
+
+CSG screwHole = hole1.union(hole2.transformed(Transform.unity().translateZ(2)));
+
+top = top.difference(screwHole.transformed(Transform.unity().translate(25.7,-28,0))).
+	  difference(screwHole.transformed(Transform.unity().translate(25.7,28,0))).
+	  difference(screwHole.transformed(Transform.unity().translate(-25.7,-28,0))).
+	  difference(screwHole.transformed(Transform.unity().translate(-25.7,28,0)));
+return top;

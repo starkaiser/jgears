@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.jgears.gui.ScriptController">
+   <children>
+      <BorderPane prefHeight="253.0" prefWidth="233.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <BorderPane fx:id="borderPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <top>
+                  <HBox prefHeight="24.0" prefWidth="556.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="runBtn1" mnemonicParsing="false" prefWidth="45.0" stylesheets="@button.css">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/open.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Open" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="runBtn11" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="45.0" stylesheets="@button.css">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/save.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Save" />
+                           </tooltip>
+                        </Button>
+                        
+                     </children>
+                  </HBox>
+               </top>
+            </BorderPane>
+         </center>
+         <bottom>
+            <AnchorPane prefHeight="30.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="okBtn" mnemonicParsing="false" onAction="#handleOk" prefWidth="80.0" stylesheets="@button.css" text="Ok" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font name="Noto Sans Regular" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#handleClose" prefWidth="80.0" stylesheets="@button.css" text="Close" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font name="Noto Sans Regular" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="runBtn" mnemonicParsing="false" onAction="#handleRun" prefWidth="80.0" stylesheets="@button.css" text="Run" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font name="Noto Sans Regular" size="14.0" />
+                     </font>
+                  </Button>
+                  <RadioButton fx:id="addRadioBtn" layoutX="32.0" layoutY="6.0" mnemonicParsing="false" text="Add Part" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="6.0">
+		      <font>
+			<Font name="Noto Sans Regular" size="12.0" />
+		      </font>
+		  </RadioButton>
+                  <RadioButton fx:id="clearRadioBtn" layoutX="22.0" layoutY="16.0" mnemonicParsing="false" text="Clear and Add Part" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="6.0">
+		      <font>
+                        <Font name="Noto Sans Regular" size="12.0" />
+		      </font>
+		  </RadioButton>
+               </children>
+            </AnchorPane>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>
