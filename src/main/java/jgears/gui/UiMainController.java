@@ -19,6 +19,7 @@ package main.java.jgears.gui;
  *
  * @author Sorin Cătălin Păștiță
  */
+import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,6 +46,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.CullFace;
 import javafx.scene.shape.MeshView;
+import javafx.stage.FileChooser;
 import main.java.jgears.gears.BasicRackCutter;
 
 public class UiMainController implements Initializable {
@@ -98,7 +100,44 @@ public class UiMainController implements Initializable {
     private void handleExportObj(ActionEvent event) {}
     @FXML
     private void handleExportStl(ActionEvent event) throws IOException {
-        FileUtil.write(Paths.get("drive.stl"), partsCSG.get(0).toStlString());
+        //FileUtil.write(Paths.get("drive.stl"), partsCSG.get(0).toStlString());
+	if (partsCSG == null) {
+	    /*
+            Action response = Dialogs.create()
+                    .title("Error")
+                    .message("Cannot export STL. There is no geometry :(")
+                    .lightweight()
+                    .showError();*/
+
+            return;
+        }
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Export STL File");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(
+                        "STL files (*.stl)",
+                        "*.stl"));
+
+        File f = fileChooser.showSaveDialog(null);
+
+        if (f == null) {
+            return;
+        }
+
+        String fName = f.getAbsolutePath();
+
+        if (!fName.toLowerCase().endsWith(".stl")) {
+            fName += ".stl";
+        }
+
+        try {
+            main.java.jgears.csg.jcsg.FileUtil.write(
+                    Paths.get(fName), partsCSG.get(0).toStlString());
+        } catch (IOException ex) {
+            Logger.getLogger(UiMainController.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
     }
     @FXML
     private void handleImportObj(ActionEvent event) {
