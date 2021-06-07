@@ -9,7 +9,7 @@ The program provides the following features:
 - automatic generation of bevel gear drives with straight teeth, tangent teeth and herringbone teeth
 - strength calculations for the gear drives
 - generates the the technical report for the gear drives as a HTML file, containing the geometrical and strength parameters of the gears
-- STL and OBJ import and export
+- STL import and export
 - generates gear drives templates as JSON files
 - a scripting interface which can be used to make complex objects using the Groovy language
 
