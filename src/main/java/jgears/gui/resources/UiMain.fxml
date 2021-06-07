@@ -22,16 +22,9 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <Menu mnemonicParsing="false" text="Export">
-                     <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleExportObj" text="OBJ" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleExportStl" text="STL" />
-                     </items></Menu>
-	    <Menu mnemonicParsing="false" text="Import">
-                     <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleImportObj" text="OBJ" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleImportStl" text="STL" />
-                     </items></Menu>
+              
+            <MenuItem mnemonicParsing="false" onAction="#handleExportStl" text="Export STL" /> 
+            <MenuItem mnemonicParsing="false" onAction="#handleImportStl" text="Import STL" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#handleClose" text="Quit" />
           </items>
