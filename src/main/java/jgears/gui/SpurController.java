@@ -327,17 +327,16 @@ public class SpurController implements Initializable {
 
         File file = fileChooser.showSaveDialog(stage);
         fileChooser.setInitialDirectory(file.getParentFile());
-        if (file != null) {
             try {
                 FileWriter fileWriter;
                 fileWriter = new FileWriter(file);
                 fileWriter.write(jsonObj.toJSONString());
                 fileWriter.close();
             } catch (IOException ex) {
-                Logger.getLogger(ReportController.class
+                Logger.getLogger(SpurController.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        
 
         //System.out.println(jsonObj);
     }
@@ -393,7 +392,8 @@ public class SpurController implements Initializable {
                 }
                 //System.out.println(paramList);
             } catch (ParseException | IOException ex) {
-                ex.printStackTrace();
+                Logger.getLogger(SpurController.class.getName()).
+                    log(Level.SEVERE, null, ex);
             }
         }
     }

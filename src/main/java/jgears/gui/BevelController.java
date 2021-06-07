@@ -295,7 +295,7 @@ public class BevelController implements Initializable {
                 fileWriter.write(jsonObj.toJSONString());
                 fileWriter.close();
             } catch (IOException ex) {
-                Logger.getLogger(ReportController.class
+                Logger.getLogger(BevelController.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
         
@@ -352,6 +352,8 @@ public class BevelController implements Initializable {
                 }
                 //System.out.println(paramList);
             } catch (ParseException | IOException ex) {
+		Logger.getLogger(BevelController.class.getName()).
+                    log(Level.SEVERE, null, ex);
             }
         }
     }
