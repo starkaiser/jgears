@@ -71,12 +71,14 @@ public class ReportController implements Initializable {
 
     @FXML
     private void handleSave(ActionEvent event) {
-        Window stage = rootPane.getScene().getWindow();
         fileChooser.setTitle("Save Report");
         fileChooser.setInitialFileName("SpurDriveReport");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("HTML File", "*.html"));
 
-        File file = fileChooser.showSaveDialog(stage);
+        File file = fileChooser.showSaveDialog(null);
+	if (file == null) {
+            return;
+        }
         fileChooser.setInitialDirectory(file.getParentFile());
             try {
                 FileWriter fileWriter;

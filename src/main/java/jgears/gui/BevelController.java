@@ -281,13 +281,15 @@ public class BevelController implements Initializable {
         jsonObj.add(pinionObj);
         jsonObj.add(gearObj);
 
-        Window stage = rootPane.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Template");
         fileChooser.setInitialFileName("bevelDrive.json");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON File", "*.json"));
 
-        File file = fileChooser.showSaveDialog(stage);
+        File file = fileChooser.showSaveDialog(null);
+	if (file == null) {
+            return;
+        }
         fileChooser.setInitialDirectory(file.getParentFile());
             try {
                 FileWriter fileWriter;
@@ -305,10 +307,12 @@ public class BevelController implements Initializable {
     @FXML
     private void handleLoadTemplate(ActionEvent event) {
         JSONParser jsonObj = new JSONParser();
-        Window stage = rootPane.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Template");
-        File file = fileChooser.showOpenDialog(stage);
+        File file = fileChooser.showSaveDialog(null);
+	if (file == null) {
+            return;
+        }
         if (file != null) {
             try {
                 FileReader reader = new FileReader(file);
