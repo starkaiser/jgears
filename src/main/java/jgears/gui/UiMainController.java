@@ -145,7 +145,30 @@ public class UiMainController implements Initializable {
     }
     @FXML
     private void handleImportStl(ActionEvent event) {
-	
+	FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("STL File");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(
+                        "STL files", "*.stl"));
+
+        File f = fileChooser.showOpenDialog(null);
+
+        if (f == null) {
+            return;
+        }
+
+        String fName = f.getAbsolutePath();
+
+        try {
+	    partsCSG.clear();
+	    partsGroup.getChildren().clear();
+            partsCSG.add(main.java.jgears.csg.jcsg.STL.file(Paths.get(fName)));
+	    
+	    partsGroup.getChildren().add(generateMeshView(partsCSG.get(0)));
+        } catch (IOException ex) {
+            Logger.getLogger(UiMainController.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
     }
     @FXML
     private void handleClose(ActionEvent event) {
@@ -278,7 +301,8 @@ public class UiMainController implements Initializable {
         PhongMaterial m = new PhongMaterial(Color.DEEPSKYBLUE);
         meshView.setMaterial(m);
         meshView.setCullFace(CullFace.BACK);
-        partsGroup.getChildren().add(meshView);*/
+        partsGroup.getChildren().add(meshView);
+	partsCSG.add(cube);*/
 
         // add the CCS and the part to the group
         viewGroup.getChildren().add(partsGroup);
@@ -352,5 +376,14 @@ public class UiMainController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(UiMainController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private MeshView generateMeshView(CSG object) {
+        MeshContainer meshContainer = object.toJavaFXMesh();
+	MeshView objectMeshView;
+        objectMeshView = meshContainer.getAsMeshViews().get(0);
+        objectMeshView.setMaterial(new PhongMaterial(Color.DEEPSKYBLUE));
+        objectMeshView.setCullFace(CullFace.BACK);
+	return objectMeshView;
     }
 }
