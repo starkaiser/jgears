@@ -222,20 +222,6 @@ public class ScriptController implements Initializable {
         return spansBuilder.create();
     }
 
-    /*
-    private void makeDraggable(){
-        rootPane.setOnMousePressed(((event) -> {
-            x = event.getSceneX();
-            y = event.getSceneY();
-        }));
-
-        rootPane.setOnMouseDragged(((event) -> {
-            stage = ((Stage)rootPane.getScene().getWindow());
-            stage.setX(event.getScreenX() - x);
-            stage.setY((event.getScreenY() - y));
-        }));
-    }*/
-
     private void compile(String code) {
 
         csgObject = null;
