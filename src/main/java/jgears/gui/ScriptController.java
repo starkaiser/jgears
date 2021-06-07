@@ -22,6 +22,8 @@ package main.java.jgears.gui;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import groovy.lang.Script;
+import java.io.File;
+import java.io.IOException;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,6 +47,8 @@ import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
@@ -56,7 +60,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.FileChooser;
 import org.reactfx.Subscription;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 public class ScriptController implements Initializable {
 
@@ -135,7 +142,62 @@ public class ScriptController implements Initializable {
     private Group partsGroup;
 
     private boolean autoCompile = false;
+    
+    @FXML
+    private void handleOpen(ActionEvent event) {
+	FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Groovy Script");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(
+                        "Groovy files", "*.groovy"));
 
+        File f = fileChooser.showOpenDialog(null);
+
+        if (f == null) {
+            return;
+        }
+
+        String fName = f.getAbsolutePath();
+
+        if (!fName.toLowerCase().endsWith(".groovy")) {
+            fName += ".groovy";
+        }
+
+        try {
+            setCode(new String(Files.readAllBytes(Paths.get(fName)), "UTF-8"));
+        } catch (IOException ex) {
+            Logger.getLogger(ScriptController.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+    }
+    @FXML
+    private void handleSave(ActionEvent event) {
+	FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Groovy Script");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(
+                        "Groovy files","*.groovy"));
+
+        File f = fileChooser.showSaveDialog(null);
+
+        if (f == null) {
+            return;
+        }
+
+        String fName = f.getAbsolutePath();
+
+        if (!fName.toLowerCase().endsWith(".groovy")) {
+            fName += ".groovy";
+        }
+
+        try {
+            Files.write(Paths.get(fName), getCode().getBytes("UTF-8"));
+        } catch (IOException ex) {
+            Logger.getLogger(ScriptController.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+    }
+    
     @FXML
     private void handleOk(ActionEvent event) {// TODO
 	compile(getCode());
@@ -283,6 +345,9 @@ public class ScriptController implements Initializable {
         }
     }
 
+    private void setCode(String code) {
+        codeArea.replaceText(code);
+    }
     private String getCode() {
         return codeArea.getText();
     }

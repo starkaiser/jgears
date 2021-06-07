@@ -18,7 +18,7 @@
                <top>
                   <HBox prefHeight="24.0" prefWidth="556.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="runBtn1" mnemonicParsing="false" prefWidth="45.0" stylesheets="@button.css">
+                        <Button fx:id="openBtn" mnemonicParsing="false" onAction="#handleOpen" prefWidth="45.0" stylesheets="@button.css">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -33,7 +33,7 @@
                               <Tooltip text="Open" />
                            </tooltip>
                         </Button>
-                        <Button fx:id="runBtn11" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="45.0" stylesheets="@button.css">
+                        <Button fx:id="saveBtn" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleSave" prefWidth="45.0" stylesheets="@button.css">
                            <font>
                               <Font size="14.0" />
                            </font>
