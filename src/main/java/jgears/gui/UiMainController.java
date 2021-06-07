@@ -96,8 +96,7 @@ public class UiMainController implements Initializable {
         }
     }
 
-    @FXML
-    private void handleExportObj(ActionEvent event) {}
+
     @FXML
     private void handleExportStl(ActionEvent event) throws IOException {
         //FileUtil.write(Paths.get("drive.stl"), partsCSG.get(0).toStlString());
@@ -138,10 +137,6 @@ public class UiMainController implements Initializable {
             Logger.getLogger(UiMainController.class.getName()).
                     log(Level.SEVERE, null, ex);
         }
-    }
-    @FXML
-    private void handleImportObj(ActionEvent event) {
-	
     }
     @FXML
     private void handleImportStl(ActionEvent event) {
