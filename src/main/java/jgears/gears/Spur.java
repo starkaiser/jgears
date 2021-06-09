@@ -117,7 +117,7 @@ public class Spur {
                 // if it is a rack create a cube and make a difference with the rack cutter
                 double h_a = (h_a_star + c_star) * m; // addendum
                 double h_f = (h_a_star + c_star) * m; // dedendum
-                double h = h_a + h_f + 5.; // entire tooth depth
+                double h = (h_a + h_f) * 2.5; // entire tooth depth
                 CSG rack = new Cube(z*m * Math.PI,h, b).toCSG().
                         transformed(Transform.unity().translateX((z*m * Math.PI)/2.0-(m*Math.PI)/2.0)).
                         transformed(Transform.unity().translateZ(b/2.0)).
