@@ -286,7 +286,12 @@ public class SpurDrive {
         gear1 = new Spur(m, alpha, z1, b1, false, doubleHelical, mid1, beta, helixDir);
     }
     public void generateGear2() {
-        gear2 = new Spur(a, rack, m, alpha, z2, b2, false, doubleHelical, mid2, beta, !helixDir);
+	double distance;
+	if(rack)
+	    distance = this.d1 / 2.0;
+	else
+	    distance = a;
+        gear2 = new Spur(distance, rack, m, alpha, z2, b2, false, doubleHelical, mid2, beta, !helixDir);
     }
 
     public Spur getGear1() {

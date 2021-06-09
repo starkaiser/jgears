@@ -125,7 +125,7 @@ public class Spur {
                 rack = rack.difference(rackCutter);
                 this.gearCSG = rack.transformed(Transform.unity().rotZ(90)).
                         transformed(Transform.unity().translateZ(-b/2.0)).
-                        transformed(Transform.unity().translateX(5)).
+                        transformed(Transform.unity().translateX(this.a)).
                         transformed(Transform.unity().translateY(2*m*Math.PI));//.transformed(Transform.unity().translateX(this.a));
             }
         }
