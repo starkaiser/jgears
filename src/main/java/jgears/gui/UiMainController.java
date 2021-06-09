@@ -47,6 +47,7 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.CullFace;
 import javafx.scene.shape.MeshView;
 import javafx.stage.FileChooser;
+import javafx.stage.WindowEvent;
 import main.java.jgears.gears.BasicRackCutter;
 
 public class UiMainController implements Initializable {
@@ -365,6 +366,11 @@ public class UiMainController implements Initializable {
             if(type.equals("script")){
                 scene.getStylesheets().add(getClass().getResource("/main/java/jgears/gui/resources/java-keywords.css").toExternalForm());
                 stage.setResizable(true);
+		ScriptController scriptController = loader.getController();
+		stage.setOnCloseRequest((WindowEvent t) -> {
+		scriptController.getExecutor().shutdown();
+		stage.close();
+	});
             }
             stage.setScene(scene);
             stage.show();

@@ -64,6 +64,8 @@ import javafx.stage.FileChooser;
 import org.reactfx.Subscription;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
 
 public class ScriptController implements Initializable {
 
@@ -353,5 +355,9 @@ public class ScriptController implements Initializable {
     }
     public void setPartsGroup(Group partsGroup){
         this.partsGroup = partsGroup;
+    }
+    
+    public ExecutorService getExecutor(){
+	return this.executor;
     }
 }
