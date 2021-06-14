@@ -290,15 +290,15 @@ public class UiMainController implements Initializable {
         viewContainer.getChildren().addAll(subScene, gizmoSubScene);
 
         // create the default part
-        /*
-        CSG cube = new BasicRackCutter(1.5, 10 + 2, Math.toRadians(20), 10, -Math.tan(0) * 10).toCSG();
+        
+        CSG cube = new Cube(100, 100, 100).toCSG();
         MeshContainer meshContainer = cube.toJavaFXMesh();
         final MeshView meshView = meshContainer.getAsMeshViews().get(0);
         PhongMaterial m = new PhongMaterial(Color.DEEPSKYBLUE);
         meshView.setMaterial(m);
         meshView.setCullFace(CullFace.BACK);
         partsGroup.getChildren().add(meshView);
-	partsCSG.add(cube);*/
+	partsCSG.add(cube);
 
         // add the CCS and the part to the group
         viewGroup.getChildren().add(partsGroup);
@@ -353,7 +353,7 @@ public class UiMainController implements Initializable {
                     break;
                 case "script":
                     ScriptController scriptController = loader.getController();
-                    scriptController.setPartsGroup(partsGroup);
+                    scriptController.setParts(partsGroup, partsCSG);
                     title = "Script";
                     break;
             }

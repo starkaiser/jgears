@@ -19,6 +19,7 @@ package main.java.jgears.gui;
  *
  * @author Sorin Cătălin Păștiță
  */
+import com.sun.javafx.scene.CssFlags;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import groovy.lang.Script;
@@ -52,6 +53,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
@@ -66,6 +68,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
+import org.codehaus.groovy.control.CompilationFailedException;
 
 public class ScriptController implements Initializable {
 
@@ -142,6 +145,7 @@ public class ScriptController implements Initializable {
     private double x = 0, y = 0;
     private Stage stage;
     private Group partsGroup;
+    private List<CSG> partsCSG;
 
     private boolean autoCompile = false;
     
@@ -300,19 +304,15 @@ public class ScriptController implements Initializable {
             CompilerConfiguration cc = new CompilerConfiguration();
 
             cc.addCompilationCustomizers(
-                    new ImportCustomizer().
-//                    addStarImports("eu.mihosoft.vrl.v3d",
-//                            "eu.mihosoft.vrl.v3d.samples").
-//                    addStaticStars("eu.mihosoft.vrl.v3d.Transform").
+                    new ImportCustomizer().addStarImports("main.java.jgears.csg.jcsg","main.java.jgears.csg.jcsg.samples", 
+							  "main.java.jgears.csg.vvecmath").
+					   addStaticStars("main.java.jgears.csg.vvecmath.Transform"));
 
-        addStarImports(
-        "main.java.jgears.csg.jcsg",
-        "main.java.jgears.csg.jcsg.samples", "main.java.jgears.csg.vvecmath").
-                            addStaticStars("main.java.jgears.csg.vvecmath.Transform")
-            );
-
+	    Binding binding = new Binding();
+	    binding.setVariable("partsCSG", partsCSG);
+	    
             GroovyShell shell = new GroovyShell(getClass().getClassLoader(),
-                    new Binding(), cc);
+                    binding, cc);
 
             Script script = shell.parse(code);
 
@@ -325,24 +325,17 @@ public class ScriptController implements Initializable {
                 csgObject = csg;
 
                 MeshContainer meshContainer = csg.toJavaFXMesh();
-
                 final MeshView meshView = meshContainer.getAsMeshViews().get(0);
-
                 PhongMaterial m = new PhongMaterial(Color.DEEPSKYBLUE);
-
                 meshView.setCullFace(CullFace.NONE);
-
                 meshView.setMaterial(m);
-
-		
+	
 		partsGroup.getChildren().add(meshView);
-		
-
             } else {
                 System.out.println(">> no CSG object returned :(");
             }
 
-        } catch (Throwable ex) {
+        } catch (CompilationFailedException ex) {
             ex.printStackTrace(System.err);
         }
     }
@@ -353,8 +346,9 @@ public class ScriptController implements Initializable {
     private String getCode() {
         return codeArea.getText();
     }
-    public void setPartsGroup(Group partsGroup){
+    public void setParts(Group partsGroup, List<CSG> partsCSG) {
         this.partsGroup = partsGroup;
+        this.partsCSG = partsCSG;
     }
     
     public ExecutorService getExecutor(){
