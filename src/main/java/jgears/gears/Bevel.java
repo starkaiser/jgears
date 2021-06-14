@@ -32,10 +32,9 @@ import java.util.List;
 
 public class Bevel {
     // RECEIVE ALL ANGLES IN RADIANS!!!
-    private CSG gearCSG;
+    final private CSG gearCSG;
     private MeshView gearMeshView;
-    private Color color = Color.DEEPSKYBLUE; //Color.rgb(0,150,201); - the blue color of the program
-    //private final double spiel = 0.05;
+    final private Color color = Color.DEEPSKYBLUE; //Color.rgb(0,150,201); - the blue color of the program
     private final double play = 0.05;
 
     // constructor for testing
@@ -87,7 +86,7 @@ public class Bevel {
         double r_outside = d_outside / 2.0;	
         double rg_outside = r_outside/Math.sin(partial_cone_angle);	
         double rg_inside = rg_outside - tooth_width;		
-        double r_inside = r_outside*rg_inside/rg_outside;
+        //double r_inside = r_outside*rg_inside/rg_outside;
         double alpha_spur = Math.atan(Math.tan(pressure_angle)/Math.cos(helix_angle));
         double delta_b = Math.asin(Math.cos(alpha_spur)*Math.sin(partial_cone_angle));	
         double da_outside = (module <1.0) ? d_outside + (module * 2.2) * Math.cos(partial_cone_angle): 
@@ -120,7 +119,7 @@ public class Bevel {
 
         double mirrpoint = Math.toRadians((180.0*(1.0- play))/teeth_number+2.0*Math.toDegrees(phi_r));
 
-        CSG gear = null;
+        CSG gear;
 
         List<List<Integer>> faces = new ArrayList<>();
         List<Integer> face1 = new ArrayList<>();
@@ -251,12 +250,14 @@ public class Bevel {
             gear = gear.dumbUnion(tooth.transformed(Transform.unity().rotZ(-rot)));
         }
 
-        CSG base = new Cylinder(rkf, rfk, height_f-height_fk, 30).toCSG().transformed(Transform.unity().rotY(180)).
-                                                                        transformed(Transform.unity().translateZ(height_f));
+        CSG base = new Cylinder(rkf, rfk, height_f-height_fk, 30).
+		       toCSG().transformed(Transform.unity().rotY(180)).
+                               transformed(Transform.unity().translateZ(height_f));
 
         CSG finalGear = base.dumbUnion(gear).transformed(Transform.unity().rotY(180)).
                                              transformed(Transform.unity().translateZ(height_f)).
-                                             transformed(Transform.unity().rotZ(-(Math.toDegrees(phi_r)+90*(1-play)/teeth_number)));
+                                             transformed(Transform.unity().rotZ(-(Math.toDegrees(phi_r) + 
+										  90*(1-play)/teeth_number)));
         return finalGear;
     }
     // drive normal gears
@@ -318,7 +319,7 @@ public class Bevel {
 	
 	double height_k = (rg_outside-tooth_width)/Math.cos(partial_cone_angle);
 	double rk = (rg_outside-tooth_width)/Math.sin(partial_cone_angle);
-	double rfk = rk*height_k*Math.tan(delta_f)/(rk+height_k*Math.tan(delta_f));
+	//double rfk = rk*height_k*Math.tan(delta_f)/(rk+height_k*Math.tan(delta_f));
 
 	double height_fk = rk*height_k/(height_k*Math.tan(delta_f)+rk);
 	
@@ -327,7 +328,7 @@ public class Bevel {
 	CSG firstHalf = bevel_gear(module, teeth_number, partial_cone_angle, tooth_width, pressure_angle, helix_angle);
 	CSG secondHalf = bevel_gear(module_inside, teeth_number, partial_cone_angle, tooth_width, 
 				  pressure_angle, -helix_angle).transformed(Transform.unity().rotZ(gamma)).
-								       transformed(Transform.unity().translateZ(height_f-height_fk));
+								transformed(Transform.unity().translateZ(height_f-height_fk));
 	return firstHalf.dumbUnion(secondHalf);
     }
     // drive double helical gears
