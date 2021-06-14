@@ -291,16 +291,12 @@ public class ScriptController implements Initializable {
     }
 
     private void compile(String code) {
-
         csgObject = null;
-
-        //clearLog();
 
 	if(clearRadioBtn.isSelected())
 	    partsGroup.getChildren().clear();
 
         try {
-
             CompilerConfiguration cc = new CompilerConfiguration();
 
             cc.addCompilationCustomizers(
@@ -322,15 +318,9 @@ public class ScriptController implements Initializable {
 
                 CSG csg = (CSG) obj;
 
-                csgObject = csg;
-
-                MeshContainer meshContainer = csg.toJavaFXMesh();
-                final MeshView meshView = meshContainer.getAsMeshViews().get(0);
-                PhongMaterial m = new PhongMaterial(Color.DEEPSKYBLUE);
-                meshView.setCullFace(CullFace.NONE);
-                meshView.setMaterial(m);
+                csgObject = csg;		
 	
-		partsGroup.getChildren().add(meshView);
+		partsGroup.getChildren().add(generateMeshView(csg));
             } else {
                 System.out.println(">> no CSG object returned :(");
             }
@@ -346,11 +336,18 @@ public class ScriptController implements Initializable {
     private String getCode() {
         return codeArea.getText();
     }
+    private MeshView generateMeshView(CSG csg) {
+        MeshContainer meshContainer = csg.toJavaFXMesh();
+        final MeshView meshView = meshContainer.getAsMeshViews().get(0);
+        PhongMaterial m = new PhongMaterial(Color.DEEPSKYBLUE);
+        meshView.setCullFace(CullFace.NONE);
+        meshView.setMaterial(m);
+	return meshView;
+    }
     public void setParts(Group partsGroup, List<CSG> partsCSG) {
         this.partsGroup = partsGroup;
         this.partsCSG = partsCSG;
     }
-    
     public ExecutorService getExecutor(){
 	return this.executor;
     }
