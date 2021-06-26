@@ -818,16 +818,6 @@ public class SpurController implements Initializable {
             else
                 reportController.setTypeLoadCalculation("Speed calculation for the specified power and torque");
 
-            String material1="User Material", material2="User Material";
-            reportController.setResults(material1, material2);
-
-            double safetyFactor = safetyFormatter.getValue();
-
-            if ((drive.getS_1() >= safetyFactor) && (drive.getS_2() >= safetyFactor))
-                reportController.setCalculationResult(true);
-            else
-                reportController.setCalculationResult(false);
-
             reportController.showReportSpur();
             Stage stage = new Stage(StageStyle.UTILITY);
             stage.initOwner(rootPane.getScene().getWindow());
