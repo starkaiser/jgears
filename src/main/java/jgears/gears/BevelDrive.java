@@ -94,7 +94,7 @@ public class BevelDrive {
     private double F_all1, F_all2; // allowable load
     private double S_1, S_2; // safety factor for each gear
 
-    private String res1="", res2="", resStrength="";
+    private String res1="", res2="", resStrength="", resReportGeom="", resReportStrength="";
 
     private Bevel bevelDrive;
     
@@ -249,18 +249,24 @@ public class BevelDrive {
         x_d2 = (5.0/6.0)*h_a0 - (z_n2/2.0)*Math.sin(alpha_nm)*Math.sin(alpha_nm);
     
 
-        this.res1 = String.format(ResultsUtils.BEVELGEOM, Math.toDegrees(alpha_nm), Math.toDegrees(alpha_t),
+        res1 = String.format(ResultsUtils.BEVELGEOM, Math.toDegrees(alpha_nm), Math.toDegrees(alpha_t),
                 Math.toDegrees(beta_b), Math.toDegrees(beta_e), Math.toDegrees(delta1), Math.toDegrees(delta_a1),
                 Math.toDegrees(delta_f1), R_e, R_m, d_e1, d_fe1, d_ae1, d_m1, d_ai1, A_e1, 0.0, h_ae1+h_fe1, s_e1, s_ke1,
                 h_ke1, z_n1, d_n1, d_an1, d_bn1, z_v1, d_v1, d_va1, d_vb1);
 
-        this.res2 = String.format(ResultsUtils.BEVELGEOM, Math.toDegrees(alpha_nm), Math.toDegrees(alpha_t),
+        res2 = String.format(ResultsUtils.BEVELGEOM, Math.toDegrees(alpha_nm), Math.toDegrees(alpha_t),
                 Math.toDegrees(beta_b), Math.toDegrees(beta_e), Math.toDegrees(delta2), Math.toDegrees(delta_a2),
                 Math.toDegrees(delta_f2), R_e, R_m, d_e2, d_fe2, d_ae2, d_m2, d_ai2, A_e2, 0.0, h_ae2+h_fe2, s_e2, s_ke2,
                 h_ke2, z_n2, d_n2, d_an2, d_bn2, z_v2, d_v2, d_va2, d_vb2);
 
-	//System.out.println(A1);
-	//System.out.println(A2);
+	resReportGeom = String.format(ResultsUtils.REPORTBEVELCOMMON, i, m_et, beta_m, alpha_t, axisAng, alpha_ne,
+				      alpha_nm, beta_b, beta_e, m_en, ep, ep_alpha, ep_beta, u_v, a_v, a_n, R_e, R_m, b) +
+			String.format(ResultsUtils.REPORTBEVELINDPARAM, z1, z2, x1, x2, x_t1, x_t2, d_e1, d_e2, d_m1, d_m2, 
+				      d_ae1, d_ae2, d_ai1, d_ai2, d_fe1, d_fe2, A_e1, A_e2, 0.0, 0.0, delta1, delta2, 
+				      delta_a1, delta_a2, delta_f1, delta_f2, a_star, a_star, c_star, c_star, 
+				      r_star, r_star, 0.0, 0.0, s_e1, s_e2, s_ke1, s_ke2, h_ke1, h_ke2, z_v1, z_v2,
+				      d_v1, d_v2, d_va1, d_va2, d_vb1, d_vb2, z_n1, z_n2, d_n1, d_n2, d_an1, d_an2,
+				      d_bn1, d_bn2, x_z1, x_z2, x_p1, x_p2, x_d1, x_d2, 0.0, 0.0, s_a1, s_a2);
     }
 
     private void calculateStrengthParam() {
@@ -292,15 +298,25 @@ public class BevelDrive {
         S_1 = F_all1 / F_t; // safety factor for pinion
         F_all2 = Math.PI * 0.065 * sigma_Ab2 * b * m_en * (Math.pow(1 - 0.5 * psi_R, 2) / K); // allowable force for gear
         S_2 = F_all2 / F_t; // safety factor for gear
+	
+	String calculationResult = "";
+	if ((S_1 >= minSafety) && (S_2 >= minSafety))
+	    calculationResult = ResultsUtils.REPORTPOSITIVECHECK;
+	else
+	    calculationResult = ResultsUtils.REPORTNEGATIVECHECK;
 
         resStrength = String.format(ResultsUtils.BEVELSTRENGTH, this.F_t, this.F_n, this.v, this.F_r1a, this.F_r2a, 
 								this.F_a1a, this.F_a2a, this.S_1, this.F_all1, this.F_r1b, 
 								this.F_r2b, this.F_a1b, this.F_a2b, this.S_2, this.F_all2);
 	
+	resReportStrength = String.format(ResultsUtils.REPORTBEVELSTRENGTHPARAM, "User material", "User material",
+					  sigma_Ab1, sigma_Ab2, F_all1, F_all2, S_1, S_2, P1, P2, n1, n2, M_k1, M_k2, 
+					  F_r1a, F_r1b, F_r2a, F_r2b, F_a1a, F_a1b, F_a2a, F_a2b, F_t, F_n, v, eta, 
+					  calculationResult);
+	
 	//double m_en_res=231.714 / (Math.PI * 0.065 * sigma_Ab1 * b * (Math.pow(1 - 0.5 * psi_R, 2) / K));
 	//System.out.println(m_en_res);
 	//System.out.println(m_et*Math.cos(beta_e));
-
     }
 
     public void generateBevelDrive(boolean gear1, boolean gear2, boolean assemblyType, boolean doubleHelical){
@@ -333,6 +349,14 @@ public class BevelDrive {
     public String getResStrength() {
         return resStrength;
     }
+    
+    public String getResReportGeom() {
+	return this.resReportGeom;
+    }
+    
+    public String getResReportStrength() {
+	return this.resReportStrength;
+    }
 
     public double getS_1() {
         return S_1;
@@ -353,407 +377,9 @@ public class BevelDrive {
     public double getM_k2() {
         return M_k2;
     }
-
-    public int getZ1() {
-        return z1;
-    }
-
-    public int getZ2() {
-        return z2;
-    }
-
-    public double getI() {
-        return i;
-    }
-
-    public double getU() {
-        return u;
-    }
-
-    public double getI_in() {
-        return i_in;
-    }
-
-    public double getAlpha_t() {
-        return alpha_t;
-    }
-
+    
     public double getBeta_m() {
         return beta_m;
-    }
-
-    public double getAxisAng() {
-        return axisAng;
-    }
-
-    public double getM_et() {
-        return m_et;
-    }
-    
-     public double getM_en() {
-        return m_en;
-    }
-
-    public double getB() {
-        return b;
-    }
-
-    public double getA_star() {
-        return a_star;
-    }
-
-    public double getC_star() {
-        return c_star;
-    }
-
-    public double getR_star() {
-        return r_star;
-    }
-
-    public double getX1() {
-        return x1;
-    }
-
-    public double getX2() {
-        return x2;
-    }
-
-    public double getX_t1() {
-        return x_t1;
-    }
-
-    public double getX_t2() {
-        return x_t2;
-    }
-
-    public boolean isHelixDir() {
-        return helixDir;
-    }
-
-    public double getAlpha_nm() {
-        return alpha_nm;
-    }
-
-    public double getDelta1() {
-        return delta1;
-    }
-
-    public double getDelta2() {
-        return delta2;
-    }
-
-    public double getD_e1() {
-        return d_e1;
-    }
-
-    public double getD_e2() {
-        return d_e2;
-    }
-
-    public double getR_e() {
-        return R_e;
-    }
-
-    public double getR_m() {
-        return R_m;
-    }
-
-    public double getPsi_R() {
-        return psi_R;
-    }
-
-    public double getM_mt() {
-        return m_mt;
-    }
-
-    public double getM_mn() {
-        return m_mn;
-    }
-
-    public double getD_m1() {
-        return d_m1;
-    }
-
-    public double getD_m2() {
-        return d_m2;
-    }
-
-    public double getZ_v1() {
-        return z_v1;
-    }
-
-    public double getZ_v2() {
-        return z_v2;
-    }
-
-    public double getD_v1() {
-        return d_v1;
-    }
-
-    public double getD_v2() {
-        return d_v2;
-    }
-
-    public double getD_vb1() {
-        return d_vb1;
-    }
-
-    public double getD_vb2() {
-        return d_vb2;
-    }
-
-    public double getD_va1() {
-        return d_va1;
-    }
-
-    public double getD_va2() {
-        return d_va2;
-    }
-
-    public double getA_v() {
-        return a_v;
-    }
-
-    public double getU_v() {
-        return u_v;
-    }
-
-    public double getZ_n1() {
-        return z_n1;
-    }
-
-    public double getZ_n2() {
-        return z_n2;
-    }
-
-    public double getD_n1() {
-        return d_n1;
-    }
-
-    public double getD_n2() {
-        return d_n2;
-    }
-
-    public double getD_bn1() {
-        return d_bn1;
-    }
-
-    public double getD_bn2() {
-        return d_bn2;
-    }
-
-    public double getD_an1() {
-        return d_an1;
-    }
-
-    public double getD_an2() {
-        return d_an2;
-    }
-
-    public double getBeta_b() {
-        return beta_b;
-    }
-
-    public double getA_n() {
-        return a_n;
-    }
-
-    public double getK1() {
-        return k1;
-    }
-
-    public double getK2() {
-        return k2;
-    }
-
-    public double getH_ae1() {
-        return h_ae1;
-    }
-
-    public double getH_ae2() {
-        return h_ae2;
-    }
-
-    public double getH_fe1() {
-        return h_fe1;
-    }
-
-    public double getH_fe2() {
-        return h_fe2;
-    }
-
-    public double getD_ae1() {
-        return d_ae1;
-    }
-
-    public double getD_ae2() {
-        return d_ae2;
-    }
-
-    public double getD_fe1() {
-        return d_fe1;
-    }
-
-    public double getD_fe2() {
-        return d_fe2;
-    }
-
-    public double getD_ai1() {
-        return d_ai1;
-    }
-
-    public double getD_ai2() {
-        return d_ai2;
-    }
-
-    public double getA_e1() {
-        return A_e1;
-    }
-
-    public double getA_e2() {
-        return A_e2;
-    }
-
-    public double getDelta_a1() {
-        return delta_a1;
-    }
-
-    public double getDelta_a2() {
-        return delta_a2;
-    }
-
-    public double getDelta_f1() {
-        return delta_f1;
-    }
-
-    public double getDelta_f2() {
-        return delta_f2;
-    }
-
-    public double getS_e1() {
-        return s_e1;
-    }
-
-    public double getS_e2() {
-        return s_e2;
-    }
-
-    public double getS_ke1() {
-        return s_ke1;
-    }
-
-    public double getS_ke2() {
-        return s_ke2;
-    }
-
-    public double getH_ke1() {
-        return h_ke1;
-    }
-
-    public double getH_ke2() {
-        return h_ke2;
-    }
-
-    public double getS_a1() {
-        return s_a1;
-    }
-
-    public double getS_a2() {
-        return s_a2;
-    }
-
-    public double getEp() {
-        return ep;
-    }
-
-    public double getEp_alpha() {
-        return ep_alpha;
-    }
-
-    public double getEp_alpha_n() {
-        return ep_alpha_n;
-    }
-
-    public double getEp_beta() {
-        return ep_beta;
-    }
-
-    public double getX_z1() {
-        return x_z1;
-    }
-
-    public double getX_z2() {
-        return x_z2;
-    }
-
-    public double getX_p1() {
-        return x_p1;
-    }
-
-    public double getX_p2() {
-        return x_p2;
-    }
-
-    public double getX_d1() {
-        return x_d1;
-    }
-
-    public double getX_d2() {
-        return x_d2;
-    }
-
-    public double getBeta_e() {
-        return beta_e;
-    }
-
-    public double getAlpha_ne() {
-        return alpha_ne;
-    }
-    
-    public double getV() {
-        return v;
-    }
-
-    public double getF_t() {
-        return F_t;
-    }
-
-    public double getF_r1a() {
-        return F_r1a;
-    }
-    public double getF_r1b() {
-        return F_r1b;
-    }
-    public double getF_r2a() {
-        return F_r2a;
-    }
-    public double getF_r2b() {
-        return F_r2b;
-    }
-
-    public double getF_a1a() {
-        return F_a1a;
-    }
-    public double getF_a1b() {
-        return F_a1b;
-    }
-    public double getF_a2a() {
-        return F_a2a;
-    }
-    public double getF_a2b() {
-        return F_a2b;
-    }
-
-    public double getF_n() {
-        return F_n;
-    }
-
-    public double getF_all1() {
-        return F_all1;
-    }
-
-    public double getF_all2() {
-        return F_all2;
     }
 
     public double getP1() {
@@ -766,17 +392,5 @@ public class BevelDrive {
 
     public double getM_k1() {
         return M_k1;
-    }
-
-    public double getEta() {
-        return eta;
-    }
-
-    public double getSigma_Ab1() {
-        return sigma_Ab1;
-    }
-
-    public double getSigma_Ab2() {
-        return sigma_Ab2;
     }
 }

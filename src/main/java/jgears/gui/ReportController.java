@@ -54,14 +54,12 @@ public class ReportController implements Initializable {
     private String methodStrengthCalculation;
     private String typeLoadCalculation;
     private String typeStrengthCalculation;
-    private String calculationResult = "";
     private WebEngine reportEngine;
     private SpurDrive drive;
     private BevelDrive driveBevel;
     private SimpleDateFormat formatter;
     private Date date;
 
-    private String material1, material2;
     private final FileChooser fileChooser = new FileChooser();
 
     @FXML
@@ -120,37 +118,8 @@ public class ReportController implements Initializable {
 	
 	formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	String formattedDriveType = String.format(ResultsUtils.REPORTDRIVETYPE, "Bevel Gears Generator");
-	String formattedCommParam = String.format(ResultsUtils.REPORTBEVELCOMMON, driveBevel.getI(), driveBevel.getM_et(),
-				   driveBevel.getBeta_m(), driveBevel.getAlpha_t(), driveBevel.getAxisAng(), driveBevel.getAlpha_ne(),
-				   driveBevel.getAlpha_nm(), driveBevel.getBeta_b(), driveBevel.getBeta_e(), driveBevel.getM_en(),
-				   driveBevel.getEp(), driveBevel.getEp_alpha(), driveBevel.getEp_beta(), driveBevel.getU_v(),
-				   driveBevel.getA_v(), driveBevel.getA_n(), driveBevel.getR_e(), driveBevel.getR_m(), driveBevel.getB());
-	String formattedIndParam = String.format(ResultsUtils.REPORTBEVELINDPARAM, driveBevel.getZ1(), driveBevel.getZ2(),
-				  driveBevel.getX1(), driveBevel.getX2(), driveBevel.getX_t1(), driveBevel.getX_t2(),
-				  driveBevel.getD_e1(), driveBevel.getD_e2(), driveBevel.getD_m1(), driveBevel.getD_m2(),
-				  driveBevel.getD_ae1(), driveBevel.getD_ae2(), driveBevel.getD_ai1(), driveBevel.getD_ai2(),
-				  driveBevel.getD_fe1(), driveBevel.getD_fe2(), driveBevel.getA_e1(), driveBevel.getA_e2(),
-				  0.0, 0.0, driveBevel.getDelta1(), driveBevel.getDelta2(), driveBevel.getDelta_a1(), driveBevel.getDelta2(),
-				  driveBevel.getDelta_f1(), driveBevel.getDelta_f2(), driveBevel.getA_star(), driveBevel.getA_star(),
-				  driveBevel.getC_star(), driveBevel.getC_star(), driveBevel.getR_star(), driveBevel.getR_star(),
-				  0.0, 0.0, driveBevel.getS_e1(), driveBevel.getS_e2(), driveBevel.getS_ke1(), driveBevel.getS_ke2(),
-				  driveBevel.getH_ke1(), driveBevel.getH_ke2(), driveBevel.getZ_v1(), driveBevel.getZ_v2(),
-				  driveBevel.getD_v1(), driveBevel.getD_v2(), driveBevel.getD_va1(), driveBevel.getD_va2(),
-				  driveBevel.getD_vb1(), driveBevel.getD_vb2(), driveBevel.getZ_n1(), driveBevel.getZ_n2(),
-				  driveBevel.getD_n1(), driveBevel.getD_n2(), driveBevel.getD_an1(), driveBevel.getD_an2(),
-				  driveBevel.getD_bn1(), driveBevel.getD_bn2(), driveBevel.getX_z1(), driveBevel.getX_z2(),
-				  driveBevel.getX_p1(), driveBevel.getX_p2(), driveBevel.getX_d1(), driveBevel.getX_d2(),
-				  0.0, 0.0, driveBevel.getS_a1(), driveBevel.getS_a2());
 	
-	String formattedStrength = String.format(ResultsUtils.REPORTBEVELSTRENGTHPARAM, material1, material2,
-                driveBevel.getSigma_Ab1(), driveBevel.getSigma_Ab2(), driveBevel.getF_all1(), driveBevel.getF_all2(),
-		driveBevel.getS_1(), driveBevel.getS_2(), driveBevel.getP1(), driveBevel.getP2(), driveBevel.getN1(),
-		driveBevel.getN2(), driveBevel.getM_k1(), driveBevel.getM_k2(), driveBevel.getF_r1a(),
-		driveBevel.getF_r1b(), driveBevel.getF_r2a(), driveBevel.getF_r2b(), driveBevel.getF_a1a(),
-		driveBevel.getF_a1b(), driveBevel.getF_a2a(), driveBevel.getF_a2b(), driveBevel.getF_t(),
-		driveBevel.getF_n(), driveBevel.getV(), driveBevel.getEta(), calculationResult);
 	// costructing the whole report as HTML
-	
 	report = ResultsUtils.REPORTHEAD + 
 		 formattedDriveType + 
 		 String.format(ResultsUtils.REPORTDATE, formatter.format(date)) + 
@@ -158,10 +127,9 @@ public class ReportController implements Initializable {
                  String.format(ResultsUtils.REPORTINFOBEVEL, inputType, methodStrengthCalculation,typeLoadCalculation, 
 			       typeStrengthCalculation) +
                  ResultsUtils.REPORTLINE + 
-		 formattedCommParam + 
-		 formattedIndParam + 
+		 driveBevel.getResReportGeom() + 
 		 ResultsUtils.REPORTLINE + 
-		 formattedStrength +
+		 driveBevel.getResReportStrength() +
 		 ResultsUtils.REPORTEND;
         reportEngine.loadContent(report); // load the HTML report
     }
@@ -197,15 +165,4 @@ public class ReportController implements Initializable {
         this.typeStrengthCalculation = typeStrengthCalculation;
     }
 
-    public void setCalculationResult(boolean calculationResult) {
-        if(calculationResult)
-            this.calculationResult = ResultsUtils.REPORTPOSITIVECHECK;
-        else
-            this.calculationResult = ResultsUtils.REPORTNEGATIVECHECK;
-    }
-
-    public void setResults(String material1, String material2) {
-        this.material1 = material1;
-        this.material2 = material2;
-    }
 }
