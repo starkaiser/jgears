@@ -290,7 +290,7 @@ public class UiMainController implements Initializable {
         viewContainer.getChildren().addAll(subScene, gizmoSubScene);
 
         // create the default part
-        
+        /*
         CSG cube = new Cube(100, 100, 100).toCSG();
         MeshContainer meshContainer = cube.toJavaFXMesh();
         final MeshView meshView = meshContainer.getAsMeshViews().get(0);
@@ -298,7 +298,7 @@ public class UiMainController implements Initializable {
         meshView.setMaterial(m);
         meshView.setCullFace(CullFace.BACK);
         partsGroup.getChildren().add(meshView);
-	partsCSG.add(cube);
+	partsCSG.add(cube);*/
 
         // add the CCS and the part to the group
         viewGroup.getChildren().add(partsGroup);

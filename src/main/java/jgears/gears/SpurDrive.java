@@ -92,7 +92,7 @@ public class SpurDrive {
     private double F_all1, F_all2; // allowable load
     private double S_1, S_2; // safety factor for each gear
 
-    private String res1="", res2="", resStrength="";
+    private String res1="", res2="", resStrength="", resReportGeom="", resReportStrength="";
 
     private Spur gear1, gear2;
 
@@ -261,6 +261,20 @@ public class SpurDrive {
                                             Math.toDegrees(this.alpha_w), Math.toDegrees(this.alpha_tw), this.d2,
                                             this.d_b2, this.d_f2, this.d_a2, this.W2, this.z_W2, this.M2, this.d_M,
                                             this.s2, this.s_a2, this.s_c2, this.h_c2);
+	resReportGeom = String.format(ResultsUtils.REPORTPARALLELCOMMON, this.i, 0.0, this.m,Math.toDegrees(this.beta), 
+					    Math.toDegrees(this.alpha), this.a_w, this.a, this.x_sum, this.p, this.p_tB, 
+					    Math.toDegrees(this.alpha_w), this.ep) +
+			String.format(ResultsUtils.REPORTPARALLELINDPARAM, this.z1, this.z2, this.x1,this.x2, this.d1, 
+					    this.d2, this.d_a1, this.d_a2, this.d_f1,
+					    this.d_f2, this.d_b1, this.d_b2, this.d_w1, this.d_w2, this.b1,
+					    this.b2, this.b_r1, this.b_r2, this.a_star, this.a_star, this.c_star,
+					    this.c_star, this.r_star, this.r_star, this.s1, this.s2, 0.0, 0.0,
+					    this.s_c1, this.s_c2, this.h_c1, this.h_c2, this.W1, this.W2,
+					    this.z_W1, this.z_W2, this.M1, this.M2, this.d_M, this.d_M,
+					    this.z_v1, this.z_v2, this.d_n1, this.d_n2,
+					    this.d_an1, this.d_an2, this.d_bn1, this.d_b2, this.x_z1, this.x_z2,
+					    this.x_p1, this.x_p2, this.x_d1, this.x_d2, 0.0, 0.0, this.s_a1,
+					    this.s_a2, 0.0,0.0);
     }
 
     private void calculateStrengthParam() {
@@ -277,9 +291,19 @@ public class SpurDrive {
         S_1 = F_all1 / F_t;
         F_all2 = Math.PI * 0.065 * sigma_Ab2 * b2 * m;
         S_2 = F_all2 / F_t;
+	
+	String calculationResult = "";
+	if ((S_1 >= minSafety) && (S_2 >= minSafety))
+	    calculationResult = ResultsUtils.REPORTPOSITIVECHECK;
+	else
+	    calculationResult = ResultsUtils.REPORTNEGATIVECHECK;
 
-        resStrength = String.format(ResultsUtils.PARALLELSTRENGTH, this.F_t, this.F_r, this.F_a, this.F_n, this.v, this.S_1,
-                                                    this.F_all1, this.S_2, this.F_all2);
+        resStrength = String.format(ResultsUtils.PARALLELSTRENGTH, this.F_t, this.F_r, this.F_a, this.F_n, this.v, 
+								   this.S_1, this.F_all1, this.S_2, this.F_all2);
+	resReportStrength = String.format(ResultsUtils.REPORTPARALLELSTRENGTHPARAM, "User material", "User material",
+					  this.sigma_Ab1, this.sigma_Ab2, this.F_all1, this.F_all2, this.S_1,
+					  this.S_2, this.P1, this.P2, this.n1, this.n2, this.M_k1, this.M_k2,
+					  this.F_r, this.F_a, this.F_t, this.F_n, this.v, this.eta, calculationResult);
     }
 
     public void generateGear1(){
@@ -321,6 +345,14 @@ public class SpurDrive {
 
     public String getResStrength() {
         return resStrength;
+    }
+    
+    public String getResReportGeom() {
+	return this.resReportGeom;
+    }
+    
+    public String getResReportStrength() {
+	return this.resReportStrength;
     }
 
     public double getX_sum() {

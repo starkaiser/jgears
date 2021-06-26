@@ -103,24 +103,6 @@ public class ReportController implements Initializable {
     public void showReportSpur() {
         formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	String formattedDriveType = String.format(ResultsUtils.REPORTDRIVETYPE, "Parallel Gears Generator");
-        String formattedCommParam = String.format(ResultsUtils.REPORTPARALLELCOMMON, drive.getI(), 0.0, drive.getM(),
-                Math.toDegrees(drive.getBeta()), Math.toDegrees(drive.getAlpha()), drive.getA_w(), drive.getA(),
-                drive.getX_sum(), drive.getP(), drive.getP_tB(), Math.toDegrees(drive.getAlpha_w()), drive.getEp());
-        String formattedIndParam = String.format(ResultsUtils.REPORTPARALLELINDPARAM, drive.getZ1(), drive.getZ2(), drive.getX1(),
-                drive.getX2(), drive.getD1(), drive.getD2(), drive.getD_a1(), drive.getD_a2(), drive.getD_f1(),
-                drive.getD_f2(), drive.getD_b1(), drive.getD_b2(), drive.getD_w1(), drive.getD_w2(), drive.getB1(),
-                drive.getB2(), drive.getB_r1(), drive.getB_r2(), drive.getA_star(), drive.getA_star(), drive.getC_star(),
-                drive.getC_star(), drive.getR_star(), drive.getR_star(), drive.getS1(), drive.getS2(),0.0, 0.0,
-                drive.getS_c1(), drive.getS_c2(), drive.getH_c1(), drive.getH_c2(), drive.getW1(), drive.getW2(),
-                drive.getZ_W1(), drive.getZ_W2(), drive.getM1(), drive.getM2(), drive.getD_M(), drive.getD_M(),
-                drive.getZ_v1(), drive.getZ_v2(), drive.getD_n1(), drive.getD_n2(),
-                drive.getD_an1(), drive.getD_an2(), drive.getD_bn1(), drive.getD_bn2(), drive.getX_z1(), drive.getX_z2(),
-                drive.getX_p1(), drive.getX_p2(), drive.getX_d1(), drive.getX_d2(), 0.0, 0.0, drive.getS_a1(),
-                drive.getS_a2(), 0.0,0.0);
-        String formattedStrength = String.format(ResultsUtils.REPORTPARALLELSTRENGTHPARAM, material1, material2,
-                drive.getSigma_Ab1(), drive.getSigma_Ab2(), drive.getF_all1(), drive.getF_all2(), drive.getS_1(),
-                drive.getS_2(), drive.getP1(), drive.getP2(), drive.getN1(), drive.getN2(), drive.getM_k1(), drive.getM_k2(),
-                drive.getF_r(), drive.getF_a(), drive.getF_t(), drive.getF_n(), drive.getV(), drive.getEta(), calculationResult);
         report = ResultsUtils.REPORTHEAD + 
 		 formattedDriveType + 
 		 String.format(ResultsUtils.REPORTDATE, formatter.format(date)) + 
@@ -128,10 +110,9 @@ public class ReportController implements Initializable {
                  String.format(ResultsUtils.REPORTINFO, inputType, designGuide, driveType, methodStrengthCalculation,
                                typeLoadCalculation, typeStrengthCalculation) +
                  ResultsUtils.REPORTLINE  + 
-		 formattedCommParam + 
-		 formattedIndParam + 
+		 drive.getResReportGeom()+ 
 		 ResultsUtils.REPORTLINE  + 
-		 formattedStrength + 
+		 drive.getResReportStrength() + 
 		 ResultsUtils.REPORTEND;
         reportEngine.loadContent(report);
     }

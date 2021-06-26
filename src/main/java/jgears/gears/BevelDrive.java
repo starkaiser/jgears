@@ -97,7 +97,7 @@ public class BevelDrive {
     private String res1="", res2="", resStrength="";
 
     private Bevel bevelDrive;
-
+    
     public BevelDrive(int z1, int z2, double alpha_t, double beta_m, boolean helixDir, double axisAng, double m_et,
                       double b, double a_star, double c_star, double r_star, double x1, double x_t1) {
         this.z1 = z1;
@@ -258,7 +258,7 @@ public class BevelDrive {
                 Math.toDegrees(beta_b), Math.toDegrees(beta_e), Math.toDegrees(delta2), Math.toDegrees(delta_a2),
                 Math.toDegrees(delta_f2), R_e, R_m, d_e2, d_fe2, d_ae2, d_m2, d_ai2, A_e2, 0.0, h_ae2+h_fe2, s_e2, s_ke2,
                 h_ke2, z_n2, d_n2, d_an2, d_bn2, z_v2, d_v2, d_va2, d_vb2);
-	
+
 	//System.out.println(A1);
 	//System.out.println(A2);
     }

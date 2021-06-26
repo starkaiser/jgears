@@ -300,7 +300,8 @@ public class ScriptController implements Initializable {
             CompilerConfiguration cc = new CompilerConfiguration();
 
             cc.addCompilationCustomizers(
-                    new ImportCustomizer().addStarImports("main.java.jgears.csg.jcsg","main.java.jgears.csg.jcsg.samples", 
+                    new ImportCustomizer().addStarImports("main.java.jgears.csg.jcsg",
+							  "main.java.jgears.csg.jcsg.samples", 
 							  "main.java.jgears.csg.vvecmath").
 					   addStaticStars("main.java.jgears.csg.vvecmath.Transform"));
 
