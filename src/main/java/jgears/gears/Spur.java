@@ -43,6 +43,7 @@ public class Spur {
     private boolean doubleHelical = false;
     private final double mid; // middle distance gap for double helical gears
     private boolean isRack = false;
+    private double x; // profiel shift
 
     private double d; // pitch diameter
     private double d_b; // base diameter
@@ -52,17 +53,20 @@ public class Spur {
     private final double h_a_star = 1.00; // addendum coefficient
     private final double c_star = 0.25; // clearance coefficient
     private final double r_star = 0.35; // root fillet coefficient
+    
+    private final double resolution = 10;
 
     private CSG gearCSG;
     private MeshView gearMeshView;
     private final Color color = Color.DEEPSKYBLUE;//Color.GHOSTWHITE;
 
-    public Spur(double m, double alpha, double z, double b, boolean internal, boolean doubleHelical, double mid,
+    public Spur(double m, double alpha, double z, double b, double x, boolean internal, boolean doubleHelical, double mid,
                 double helixAngle, boolean helixDir) {
         this.m = m;
         this.z = z;
         this.alpha = alpha;
         this.b = b;
+	this.x = x;
         this.internal = internal;
         this.doubleHelical = doubleHelical;
         this.mid = mid;
@@ -73,7 +77,7 @@ public class Spur {
         generateMeshView();
     }
 
-    public Spur(double a, boolean rack, double m, double alpha, double z, double b, boolean internal,
+    public Spur(double a, boolean rack, double m, double alpha, double z, double b, double x, boolean internal,
                 boolean doubleHelical, double mid, double helixAngle, boolean helixDir) {
         this.a = a;
         this.isRack = rack;
@@ -81,6 +85,7 @@ public class Spur {
         this.z = z;
         this.alpha = alpha;
         this.b = b;
+	this.x = x;
         this.internal = internal;
         this.doubleHelical = doubleHelical;
         this.mid = mid;
@@ -105,9 +110,9 @@ public class Spur {
             if (isRack == false) {
                 // if it is a gear, rotate the rack around a cylinder and make sequential differences
                 CSG gear = new Cylinder(d_a / 2.0, b, (int)z).toCSG();
-                for (int i = 0; i <= 380; i += 10) { // 9, 10 - for high performance, 2 - high resolution
+                for (int i = 0; i <= 380; i += resolution) { // 9, 10 - for high performance, 2 - high resolution
                     gear = gear.difference(rackCutter.
-                            transformed(Transform.unity().translate(-i / 360.0 * d * Math.PI, -d / 2.0, 0.0)).
+                            transformed(Transform.unity().translate(-i / 360.0 * d * Math.PI, -(d / 2.0 +x), 0.0)).
                             transformed(Transform.unity().rotZ(-i)));
                 }
                 this.gearCSG = gear.transformed(Transform.unity().translateX(this.a)).
@@ -153,9 +158,9 @@ public class Spur {
                 }
                 else
                    gear = new Cylinder(d_a / 2.0, b, 20).toCSG();
-                for (int i = 0; i <= 380; i += 20) { // 9, 10 - for high performance, 2 - high resolution
+                for (int i = 0; i <= 380; i += resolution) { // 9, 10 - for high performance, 2 - high resolution
                     gear = gear.difference(rackCutter.
-                            transformed(Transform.unity().translate(-i / 360.0 * d * Math.PI, -d / 2.0, 0.0)).
+                            transformed(Transform.unity().translate(-i / 360.0 * d * Math.PI, -(d / 2.0 +x), 0.0)).
                             transformed(Transform.unity().rotZ(-i)));
                 }
                 this.gearCSG = gear.transformed(Transform.unity().translateX(this.a)).

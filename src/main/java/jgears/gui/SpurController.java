@@ -735,8 +735,17 @@ public class SpurController implements Initializable {
         boolean rackEnabled = pinionRackRadioBtn.isSelected();
 
         // TODO x1 x2
+	double x1 = 0.0, x2 = 0.0, x_sum;
+	if (profileShiftRadioBtn.isSelected()) {
+	    x1 = profileShiftFormatter1.getValue();
+	    x_sum = totalProfileShiftFormatter.getValue();
+	    x2 = x_sum - x1;
+	} else {
+	    
+	}
+	
         if(!calculationCheckBox.isSelected())
-            drive = new SpurDrive(z1,z2,Math.toRadians(alpha),Math.toRadians(hAngle),m,a_star,c_star,r_star,b1,b2,0,0,
+            drive = new SpurDrive(z1,z2,Math.toRadians(alpha),Math.toRadians(hAngle),m,a_star,c_star,r_star,b1,b2, x1, x2,
                     !(helixDir.isSelected()), doubleHelEnable, mid1, mid2, rackEnabled);
         else {
             double P1 = 0, n1 = 0, M_k1 = 0;
@@ -757,7 +766,7 @@ public class SpurController implements Initializable {
             double minSafety = safetyFormatter.getValue();
             double abs1 = pinionParamFormatter1.getValue();
             double abs2 = gearParamFormatter1.getValue();
-            drive = new SpurDrive(z1,z2,Math.toRadians(alpha),Math.toRadians(hAngle),m,a_star,c_star,r_star,b1,b2,0,0,
+            drive = new SpurDrive(z1,z2,Math.toRadians(alpha),Math.toRadians(hAngle),m,a_star,c_star,r_star,b1,b2, x1, x2,
                     !(helixDir.isSelected()), doubleHelEnable, mid1, mid2, rackEnabled, P1, n1, M_k1, eta, minSafety, abs1, abs2);
             powerFormatter2.setValue(drive.getP2());
             speedFormatter2.setValue(drive.getN2());
