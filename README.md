@@ -4,7 +4,7 @@ jgears
 jgears is a program that generates parallel and bevel gear drives automatically from a few input parameters. It is built using the 
 [JCSG](https://github.com/miho/JCSG) constructive solid geometry library, written by Michael Hoffer. 
 
-See it in action here: (https://www.youtube.com/watch?v=ocgNLcgIhuQ)
+See it in action here: https://www.youtube.com/watch?v=ocgNLcgIhuQ
 
 The program provides the following features:
 - automatic generation of parallel gear drives with spur gears, helical gears and double helical gears
